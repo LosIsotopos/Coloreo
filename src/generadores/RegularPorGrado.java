@@ -1,7 +1,10 @@
 package generadores;
 
-import java.util.ArrayList;
+import java.util.List;
+import java.util.LinkedList;
 import java.util.Random;
+
+import matrizSimetrica.MatrizSimetrica;
 
 public class RegularPorGrado {
 	private int cantNodos;
@@ -12,11 +15,17 @@ public class RegularPorGrado {
 	private int gradoMin;
 	private int grado;
 	private int aristasPorNodo;
-	private ArrayList<ConexionNodo> nodo = new ArrayList<ConexionNodo>();
+	private MatrizSimetrica matriz;
+
 	
 	
 	// HAY QUE HACER LA VALIDACION QUE NO SE PUEDE HACER UN GRAFO REGULAR DEPENDIENDO LA CANT DE NODOS
 	
+	public MatrizSimetrica getMatriz() {
+		return matriz;
+	}
+
+
 	public RegularPorGrado(int cantNodos, int grado) {
 		if(cantNodos == grado) {
 			System.out.println("Cantidad de Nodos es igual a Grado");
@@ -32,55 +41,76 @@ public class RegularPorGrado {
 		this.cantNodos = cantNodos;
 		this.grado = grado;
 		aristasPorNodo = grado;
-		int [] nodoAux = new int [grado];
-		for(int f = 0; f < this.cantNodos; f++) {
-//			for(int c = 0; c < grado; c++) {
-//				nodoAux = new Random().nextInt(cantNodos);
-//				// Evito que la ariasta sea un rulo a sí mismo
-//				while(nodoAux == f){
-//					nodoAux = new Random().nextInt(cantNodos);	
-//				}
-//				nodo.add(new ConexionNodo(f,nodoAux));
-				if (aristasPorNodo != 0) {
-					nodoAux = generateRandoms(f, cantNodos);
-					for (int i = 0; i < nodoAux.length; i++) {
-						nodo.add(new ConexionNodo(f,nodoAux[i]));
-						cantAristas++;
-					}					
-				}
-//			}
-		}
+		matriz = new MatrizSimetrica(cantNodos);
+		
+
 		porcentajeAdy = 100;
 		gradoMax = grado;
 		gradoMin = grado;
+		
 	}
 	
-	public int[] generateRandoms (int nodoOrigen, int cantNodos) {
-		int [] nodoAux = new int [aristasPorNodo];
-		boolean duplicate = true;
-		for (int i = 0; i < aristasPorNodo; i++) {
-			nodoAux[i] = (new Random().nextInt(cantNodos - nodoOrigen -1)) + nodoOrigen + 1;							
-		}
-		if (nodoAux.length > 1) {
-			while (duplicate) {
-				for (int i = 0; i < nodoAux.length; i++) {
-					for (int j = i+1; j < nodoAux.length; j++) {
-						if (nodoAux[i] == nodoAux[j]) {
-							nodoAux[j] = (new Random().nextInt(cantNodos - nodoOrigen - 1)) + nodoOrigen + 1;
-							duplicate = true;
-						} else {
-							duplicate = false;
-						}
+
+	public void makeGraph() {
+		Random rnd = new Random();
+		List<Integer> nodosVisitados= new LinkedList<Integer>();
+		int idNodoOrigen;
+		int idNodoDestino = rnd.nextInt(cantNodos);
+		int conexiones = 0;
+		int i;
+		while (nodosVisitados.size() != cantNodos) {
+			idNodoOrigen = rnd.nextInt(cantNodos);
+			i = contarConexiones(idNodoOrigen);
+			//Obtengo un nodo origen que no haya visitado
+			while (nodosVisitados.contains((Object) idNodoOrigen) && nodosVisitados.size() != cantNodos) {
+				idNodoOrigen = rnd.nextInt(cantNodos);
+			}
+			// Le pongo I conexiones al nodoOrigen
+			while (i < grado) {
+				if(idNodoDestino != idNodoOrigen) {
+					conexiones = contarConexiones(idNodoDestino);
+					if(conexiones < grado && !matriz.getValor(idNodoOrigen, idNodoDestino)) {
+						matriz.setValor(idNodoOrigen, idNodoDestino);
+						matriz.setValor(idNodoDestino, idNodoOrigen);
+						i++;
+					} else if (conexiones == grado && !nodosVisitados.contains(idNodoDestino)) {
+						nodosVisitados.add(idNodoDestino);
 					}
 				}
-			}	
+				conexiones = 0;
+				idNodoDestino = rnd.nextInt(cantNodos);
+			}
+			nodosVisitados.add(idNodoOrigen);
+			
 		}
-		aristasPorNodo--;
-		return nodoAux;
 	}
 
-	public ArrayList<ConexionNodo> getNodo() {
-		return nodo;
+
+	private int contarConexiones(int idNodo) {
+		int conexiones = 0;
+		for (int j = 0; j < cantNodos; j++) {
+			if(matriz.getValor(idNodo, j)) {
+				conexiones++;
+			}
+		}
+		return conexiones;
 	}
+	
+	public void mostrarGrafo() {
+		for (int i = 0; i < cantNodos; i++) { 
+			for (int j = i; j < cantNodos; j++) {
+				if (i != j && matriz.getValor(i, j)) {
+					System.out.println(i + " " + j);
+				}
+			}
+			
+		}
+	}
+
+
+
+
+
+
 	
 }
