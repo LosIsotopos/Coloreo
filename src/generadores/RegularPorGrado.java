@@ -54,8 +54,8 @@ public class RegularPorGrado {
 	public void makeGraph() {
 		Random rnd = new Random();
 		List<Integer> nodosVisitados= new LinkedList<Integer>();
-		int idNodoOrigen;
-		int idNodoDestino = rnd.nextInt(cantNodos);
+		int idNodoOrigen = rnd.nextInt(cantNodos);;
+		int idNodoDestino = buscarElMenorGrado(idNodoOrigen);
 		int conexiones = 0;
 		int i;
 		while (nodosVisitados.size() != cantNodos) {
@@ -68,21 +68,47 @@ public class RegularPorGrado {
 			// Le pongo I conexiones al nodoOrigen
 			while (i < grado) {
 				if(idNodoDestino != idNodoOrigen) {
+					// Me fijo cuantas conexiones tiene mi nodo destino, de tener la misma cantidad que el grado
+					// No puedo usarlo
 					conexiones = contarConexiones(idNodoDestino);
 					if(conexiones < grado && !matriz.getValor(idNodoOrigen, idNodoDestino)) {
-						matriz.setValor(idNodoOrigen, idNodoDestino);
-						matriz.setValor(idNodoDestino, idNodoOrigen);
+						ubicar(idNodoOrigen,idNodoDestino);
 						i++;
 					} else if (conexiones == grado && !nodosVisitados.contains(idNodoDestino)) {
 						nodosVisitados.add(idNodoDestino);
 					}
 				}
 				conexiones = 0;
-				idNodoDestino = rnd.nextInt(cantNodos);
+				idNodoDestino = buscarElMenorGrado(idNodoOrigen);
 			}
 			nodosVisitados.add(idNodoOrigen);
 			
 		}
+	}
+
+
+	private int buscarElMenorGrado(int idNodoOrigen) {
+		int menor = Integer.MAX_VALUE;
+		int pos = -1;
+		int conexiones;
+		for (int i = 0; i < cantNodos; i++) {
+			conexiones = contarConexiones(i);
+			if((menor > conexiones || contarConexiones(idNodoOrigen) > conexiones) && i != idNodoOrigen) {
+				menor = conexiones;
+				pos = i;
+			}
+		}
+		return pos;
+	}
+
+
+	private void ubicar(int origen, int destino) {
+		if(origen < destino) {
+			matriz.setValor(origen, destino);
+		} else {
+			matriz.setValor(destino, origen);
+		}
+		
 	}
 
 
