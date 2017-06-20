@@ -84,4 +84,6 @@ public class MatrizSimetrica {
 		}
 		return cant;
 	}
+	
+
 }

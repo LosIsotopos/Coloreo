@@ -3,6 +3,7 @@ package matrizSimetrica;
 import java.util.Random;
 
 import generadores.Generador;
+import generadores.RegularPorGrado;
 
 public class Main {
 
@@ -18,12 +19,7 @@ public class Main {
 		
 //		Generador grafo = new Generador(6);
 //		grafo.nPartitos(2);
-//		grafo.mostrarGrafo();
-		
-		
-//		int [] vec = {1,1,1,2,0,0};
-//		System.out.println(findLower(vec));
-		
+//		grafo.mostrarGrafo();		
 		
 		int cantNodos = 6;
 		int grados = 3;
