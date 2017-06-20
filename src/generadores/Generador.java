@@ -51,6 +51,38 @@ public class Generador {
 		}
 	}
 	
+	public void regularPorGrado (int gradoPorNodo) {
+		for (int i = 0; i < cantNodos; i++) {
+			for (int j = i + 1; j < cantNodos; j++) {
+				if(gradoPorNodo != grado[i] && !matriz.getValor(i, j)) {
+					matriz.setValor(i, j);
+					grado[i]++;
+					grado[j]++;
+					cantAristas++;
+				}
+			}
+		}
+	}
+	
+	public void nPartitos (int nParticion) {
+		int [] ubicacionNodoEnParticion = new int [cantNodos];
+		// Genero un vector de los nodos, a los cuales los voy a asignar random a uno de los
+		// conjuntos de las N - PARTICIONES
+		for (int i = 0; i < cantNodos; i++) {
+			ubicacionNodoEnParticion[i] = new Random().nextInt(nParticion);
+		}
+		for (int i = 0; i < cantNodos; i++) {
+			for (int j = i + 1; j < cantNodos; j++) {
+				if(ubicacionNodoEnParticion[i] != ubicacionNodoEnParticion[j] && !matriz.getValor(i, j)) {
+					matriz.setValor(i, j);
+					grado[i]++;
+					grado[j]++;
+					cantAristas++;
+				}
+			}
+		}
+	}
+	
 	public int getGradoMin() {
 		int gradoMin = 0;
 		for (int i = 0; i < cantNodos; i++) {
