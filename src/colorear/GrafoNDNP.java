@@ -50,52 +50,62 @@ public class GrafoNDNP {
 	}
 	
 	public void colorear() {
-		// se fija si lo puede el color que tiene
-		// sino agrega uno nuevo y lo pinta de ese
 		int colorBase = 1;
 		int color = colorBase;
 		int noColoreado = -1;
 		for (int i = 0; i < listaColoreada.length; i++) {
 			listaColoreada[i] = noColoreado;
 		}
-		listaNodos.removeAll(listaNodos);
-		listaNodos.add(6);
-		listaNodos.add(4);
-		listaNodos.add(5);
-		listaNodos.add(1);
-		listaNodos.add(2);
-		listaNodos.add(0);
-		listaNodos.add(3);
-		listaNodos.add(7);
-		int nodoAnt = listaNodos.get(0);
-//		listaColoreada[listaNodos.get(0)] = color;
-		for (int nodo44 : listaNodos) {
-			System.out.println(nodo44);
-		}
-		for (int nodo1 : listaNodos) {
-			if (listaColoreada[nodo1] == noColoreado) {
-				listaColoreada[nodo1] = color;				
-			}
-			for (int i = 0; i < cantNodos; i++) {
-				if (matriz.getValor(nodo1, i) && (listaColoreada[i] == noColoreado || listaColoreada[i] == listaColoreada[nodo1])) {
-					if (nodoAnt != i && listaColoreada[nodoAnt] != listaColoreada[nodo1] && !matriz.getValor(nodoAnt, i)) {
-						color = listaColoreada[nodoAnt];
-					} else {
-						while (listaColoreada[nodo1] >= color) {
-						color++;
-						}
-					}
-					listaColoreada[i] = color;
+		// El primero lo pinto por defecto
+		listaColoreada[listaNodos.get(0)] = color;
+		// Ahora empiezo por el que sigue y voy preguntando
+		for (int i = 1; i < cantNodos; i++) {
+			listaColoreada[listaNodos.get(i)] = color;
+			for (int j = 0; j < cantNodos; j++) {
+				if (matriz.getValor(listaNodos.get(i), j) && listaColoreada[listaNodos.get(i)] == listaColoreada[j]) {
+					color++;
+					listaColoreada[listaNodos.get(i)] = color;
+					j = 0;
 				}
-				color = colorBase;
 			}
-			nodoAnt = nodo1;
-		}
-		for (int i = 0; i < cantNodos; i++) {
-			System.out.println(i + " Color: " + listaColoreada[i]);
+			color = colorBase;
 		}
 	}
-
+//	public void colorear() {
+//		// se fija si lo puede el color que tiene
+//		// sino agrega uno nuevo y lo pinta de ese
+//		int colorBase = 1;
+//		int color = colorBase;
+//		int noColoreado = -1;
+//		int nodoAnt = listaNodos.get(0);
+//		for (int i = 0; i < listaColoreada.length; i++) {
+//			listaColoreada[i] = noColoreado;
+//		}
+////		listaColoreada[listaNodos.get(0)] = color;
+//		for (int nodo44 : listaNodos) {
+//			System.out.println(nodo44);
+//		}
+//		for (int nodo1 : listaNodos) {
+//			if (listaColoreada[nodo1] == noColoreado) {
+//				listaColoreada[nodo1] = color;				
+//			}
+//			for (int i = 0; i < cantNodos; i++) {
+//				if (matriz.getValor(nodo1, i) && (listaColoreada[i] == noColoreado || listaColoreada[i] == listaColoreada[nodo1])) {
+//					if (nodoAnt != i && listaColoreada[nodoAnt] != listaColoreada[nodo1] && !matriz.getValor(nodoAnt, i)) {
+//						color = listaColoreada[nodoAnt];
+//					} else {
+//						while (listaColoreada[nodo1] >= color) {
+//						color++;
+//						}
+//					}
+//					listaColoreada[i] = color;
+//				}
+//				color = colorBase;
+//			}
+//			nodoAnt = nodo1;
+//		}
+//	}
+	
 	public void secuencial() {
 		// PINTAR EL PRIMERO // 0
 //		colorear(0);
