@@ -1,6 +1,7 @@
 package colorear;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -39,10 +40,11 @@ public class GrafoNDNP {
 		}	
 	}
 	
-	public static void main(String[] args) throws FileNotFoundException {
-			
-		GrafoNDNP grafo = new GrafoNDNP("ColorearCirculo8-2.in");
-//		grafo.mezclar();
+	public static void main(String[] args) throws IOException {
+		String path = "ColorearGrafo8-3.in";	
+//		String path = "ColorearCirculo8-2.in";
+		GrafoNDNP grafo = new GrafoNDNP(path);
+		grafo.mezclar();
 		grafo.colorear();
 	}
 	public void mezclar() {
@@ -50,9 +52,11 @@ public class GrafoNDNP {
 	}
 	
 	public void colorear() {
+		this.cantColores = 1;
 		int colorBase = 1;
 		int color = colorBase;
 		int noColoreado = -1;
+		int j;
 		for (int i = 0; i < listaColoreada.length; i++) {
 			listaColoreada[i] = noColoreado;
 		}
@@ -61,16 +65,84 @@ public class GrafoNDNP {
 		// Ahora empiezo por el que sigue y voy preguntando
 		for (int i = 1; i < cantNodos; i++) {
 			listaColoreada[listaNodos.get(i)] = color;
-			for (int j = 0; j < cantNodos; j++) {
+			j = 0;
+			while (j < cantNodos) {
 				if (matriz.getValor(listaNodos.get(i), j) && listaColoreada[listaNodos.get(i)] == listaColoreada[j]) {
 					color++;
+					if (color > cantColores) {
+						cantColores = color;						
+					}
 					listaColoreada[listaNodos.get(i)] = color;
-					j = 0;
+					j = -1;
 				}
+				j++;
 			}
 			color = colorBase;
 		}
+		for (int i = 0; i < cantNodos; i++) {
+			System.out.println(i + " Color: " + listaColoreada[i]);
+		}
 	}
+	
+	// COLOREO PABLO
+//	public void colorear() {
+//		// se fija si lo puede el color que tiene
+//		// sino agrega uno nuevo y lo pinta de ese
+//		int colorBase = 1;
+//		int color = colorBase;
+//		int noColoreado = -1;
+//		for (int i = 0; i < listaColoreada.length; i++) {
+//			listaColoreada[i] = noColoreado;
+//		}
+//		int nodoAnt = listaNodos.get(0);
+//		// listaColoreada[listaNodos.get(0)] = color;
+//		for (int nodo44 : listaNodos) {
+//			System.out.println(nodo44);
+//		}
+//		for (int nodoActual : listaNodos) {
+//			if (listaColoreada[nodoActual] == noColoreado) {
+//				listaColoreada[nodoActual] = color;
+//			}
+//			for (int i = 0; i < cantNodos; i++) {
+//				if (matriz.getValor(nodoActual, i)
+//						&& (listaColoreada[i] == noColoreado || listaColoreada[i] == listaColoreada[nodoActual])) {
+//					if (nodoAnt != i && listaColoreada[nodoAnt] != listaColoreada[nodoActual]
+//							&& !matriz.getValor(nodoAnt, i)) {
+//						if (check(listaColoreada[nodoAnt], i)) {
+//							color = listaColoreada[nodoAnt];
+//						} else {
+//							while (listaColoreada[nodoActual] >= color) {
+//								color++;
+//							}
+//						}
+//					} else {
+//						while (listaColoreada[nodoActual] >= color) {
+//							color++;
+//						}
+//					}
+//					listaColoreada[i] = color;
+//				}
+//				color = colorBase;
+//			}
+//			nodoAnt = nodoActual;
+//		}
+//		for (int i = 0; i < cantNodos; i++) {
+//			System.out.println(i + " Color: " + listaColoreada[i]);
+//		}
+//	}
+//	private boolean check(int color, int nodo) {
+//		for (int i = 0; i < cantNodos; i++) {
+//			if (matriz.getValor(nodo, i) && listaColoreada[i] == color) {
+//				return false;
+//			}
+//
+//		}
+//		return true;
+//	}
+	
+	// FIN COLOREO PABLO
+	
+	
 //	public void colorear() {
 //		// se fija si lo puede el color que tiene
 //		// sino agrega uno nuevo y lo pinta de ese
