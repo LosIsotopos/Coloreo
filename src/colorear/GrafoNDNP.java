@@ -1,6 +1,7 @@
 package colorear;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -39,11 +40,14 @@ public class GrafoNDNP {
 		}	
 	}
 	
-	public static void main(String[] args) throws FileNotFoundException {
-			
-		GrafoNDNP grafo = new GrafoNDNP("ColorearCirculo8-2.in");
-//		grafo.mezclar();
+	public static void main(String[] args) throws IOException {
+		String path = "ColorearGrafo8-3.in";	
+		GrafoNDNP grafo = new GrafoNDNP(path);
+		grafo.mezclar();
 		grafo.colorear();
+//		Generador gen = new Generador(8);
+//		gen.regularPorGrado(3);
+//		gen.escribir("ColorearGrafo8-3");
 	}
 	public void mezclar() {
 		Collections.shuffle(listaNodos);
@@ -58,30 +62,36 @@ public class GrafoNDNP {
 		for (int i = 0; i < listaColoreada.length; i++) {
 			listaColoreada[i] = noColoreado;
 		}
-		listaNodos.removeAll(listaNodos);
-		listaNodos.add(6);
-		listaNodos.add(4);
-		listaNodos.add(5);
-		listaNodos.add(1);
-		listaNodos.add(2);
-		listaNodos.add(0);
-		listaNodos.add(3);
-		listaNodos.add(7);
+//		listaNodos.removeAll(listaNodos);
+//		listaNodos.add(6);
+//		listaNodos.add(4);
+//		listaNodos.add(5);
+//		listaNodos.add(1);
+//		listaNodos.add(2);
+//		listaNodos.add(0);
+//		listaNodos.add(3);
+//		listaNodos.add(7);
 		int nodoAnt = listaNodos.get(0);
 //		listaColoreada[listaNodos.get(0)] = color;
 		for (int nodo44 : listaNodos) {
 			System.out.println(nodo44);
 		}
-		for (int nodo1 : listaNodos) {
-			if (listaColoreada[nodo1] == noColoreado) {
-				listaColoreada[nodo1] = color;				
+		for (int nodoActual : listaNodos) {
+			if (listaColoreada[nodoActual] == noColoreado) {
+				listaColoreada[nodoActual] = color;				
 			}
 			for (int i = 0; i < cantNodos; i++) {
-				if (matriz.getValor(nodo1, i) && (listaColoreada[i] == noColoreado || listaColoreada[i] == listaColoreada[nodo1])) {
-					if (nodoAnt != i && listaColoreada[nodoAnt] != listaColoreada[nodo1] && !matriz.getValor(nodoAnt, i)) {
-						color = listaColoreada[nodoAnt];
+				if (matriz.getValor(nodoActual, i) && (listaColoreada[i] == noColoreado || listaColoreada[i] == listaColoreada[nodoActual])) {
+					if (nodoAnt != i && listaColoreada[nodoAnt] != listaColoreada[nodoActual] && !matriz.getValor(nodoAnt, i)) {
+						if(check(listaColoreada[nodoAnt], i)) {
+							color = listaColoreada[nodoAnt];
+						} else {
+							while (listaColoreada[nodoActual] >= color) {
+								color++;
+							}
+						}
 					} else {
-						while (listaColoreada[nodo1] >= color) {
+						while (listaColoreada[nodoActual] >= color) {
 						color++;
 						}
 					}
@@ -89,11 +99,21 @@ public class GrafoNDNP {
 				}
 				color = colorBase;
 			}
-			nodoAnt = nodo1;
+			nodoAnt = nodoActual;
 		}
 		for (int i = 0; i < cantNodos; i++) {
 			System.out.println(i + " Color: " + listaColoreada[i]);
 		}
+	}
+
+	private boolean check(int color, int nodo) {
+		for (int i = 0; i < cantNodos; i++) {
+			if(matriz.getValor(nodo, i) && listaColoreada[i] == color) {
+				return false;
+			}
+			
+		}
+		return true;
 	}
 
 	public void secuencial() {

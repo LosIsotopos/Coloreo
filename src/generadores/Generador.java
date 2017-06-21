@@ -13,6 +13,7 @@ public class Generador {
 	private int cantAristas;
 	private int cantNodos;
 	
+	
 	public Generador(int cantNodos) {
 		this.cantNodos = cantNodos;
 		grado = new int[cantNodos];
@@ -64,8 +65,10 @@ public class Generador {
 //		}
 //	}
 	public void regularPorGrado (int gradoPorNodo) {
+		cantAristas = 0;
 		int grados = gradoPorNodo;
 		int aristas = (cantNodos * grados) / 2 ;
+		
 		if (cantNodos < grados) {
 			System.out.println("El Grado no puede ser mayor a los Nodos");
 		} else {
@@ -149,6 +152,7 @@ public class Generador {
 				}
 			}
 		}
+		cantAristas =  (cantNodos * gradoPorNodo) / 2 ;
 	}
 	
 	private int hacerPares (int aristas, int offset) {
@@ -341,7 +345,7 @@ public class Generador {
 	public void escribir(String path) throws IOException {
 		FileWriter archivo = new FileWriter(path + ".in");
 		PrintWriter fichero = new PrintWriter(archivo);
-		fichero.println(cantNodos + " " + cantAristas + " " + getPorcentajeAdy() + " " + getGradoMin() + " " + getGradoMax());
+		fichero.println(cantNodos + " " + matriz.calcularAristas() + " " + getPorcentajeAdy() + " " + getGradoMin() + " " + getGradoMax());
 		for (int i = 0; i < cantNodos; i++) {
 			for (int j = i; j < cantNodos; j++) {
 				if (i != j && matriz.getValor(i, j) == true) {
