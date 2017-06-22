@@ -124,7 +124,7 @@ public class Generador {
 	public void escribir(String path) throws IOException {
 		FileWriter archivo = new FileWriter(path + ".in");
 		PrintWriter fichero = new PrintWriter(archivo);
-		fichero.println(cantNodos + " " + matriz.calcularAristas() + " " + getPorcentajeAdy() + " " + getGradoMin() + " " + getGradoMax());
+		fichero.println(cantNodos + " " + matriz.calcularAristas() + " " + getPorcentajeAdy() + " " + getGradoMax() + " " + getGradoMin());
 		for (int i = 0; i < cantNodos; i++) {
 			for (int j = i; j < cantNodos; j++) {
 				if (i != j && matriz.getValor(i, j) == true) {
