@@ -8,15 +8,18 @@ public class Main {
 
 	public static void main(String[] args) throws IOException {
 		int cantNodos = 1000;
-		int grado = 500;
+		double porcenAdy = 0.75;
 		Generador grafo = new Generador(cantNodos);
-		grafo.regularPorGrado(grado);
-		grafo.mostrarGrafo();
-		System.out.println(cantNodos*grado/2);
-		System.out.println(grafo.getMatriz().contarTrue());
-
-		grafo.escribir("ColorearCirculo1000-501");
-
-//		grafo.escribir("ColorearCirculo8-2");
+		
+//		grafo.aleatorioProbAdy(porcenAdy);
+//		grafo.regularPorAdy(porcenAdy);
+		
+//		grafo.escribir("Grafo600-40Ady");
+//		grafo.escribir("Grafo600-60Ady");
+//		grafo.escribir("Grafo600-90Ady");
+		
+//		grafo.escribir("Grafo1000-50Ady");
+//		grafo.escribir("Grafo1000-75Ady");
+		
 	}
 }
