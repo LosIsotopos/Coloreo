@@ -1,4 +1,5 @@
 package progProbador;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -27,7 +28,6 @@ public class ProgProbador {
 		// grmax
 		int e =sc.nextInt();
 		// grmin
-		
 		for (int i = 0; i < cantNodos; i++) {
 			// INDICE + COLOR
 			// Tecnicamente no hace falta ya que el está ordenado el archivo
@@ -39,6 +39,7 @@ public class ProgProbador {
 		for (int i = 0; i < matriz.getCantNodos(); i++) {
 			for (int j = 1; j < matriz.getCantNodos(); j++) {
 				if (matriz.getValor(i, j) && coloreo.get(i) == coloreo.get(j)) {
+					System.out.println("EL NODO: "+ i + " Y EL NODO: " + j);
 					return false;
 				}
 			}

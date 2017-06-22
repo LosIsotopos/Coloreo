@@ -48,12 +48,12 @@ public class GrafoNDNP {
 	}
 	
 	public static void main(String[] args) throws IOException {
-		String path = "ColorearGrafo8-3.in";	
+		String path = "ColorearCirculo1000-501.in";	
 //		String path = "ColorearCirculo8-2.in";
 		GrafoNDNP grafo = new GrafoNDNP(path);
-		grafo.secuencial(1000);
-		
-		System.out.println(new ProgProbador("ColorearGrafo8-3.in", "Coloreado8-12.out").check());
+		grafo.matula(20);
+		grafo.imprimir();
+		System.out.println(new ProgProbador(path, "Coloreado1000-250498.out").check());
 	}
 	
 	public void mezclar() {
@@ -77,7 +77,6 @@ public class GrafoNDNP {
 			});	
 		}
 	}	
-	
 	
 	public void colorear() {
 		this.cantColores = 1;
@@ -106,18 +105,11 @@ public class GrafoNDNP {
 				j++;
 			}
 			color = colorBase;
-		}
-//		System.out.println("Me va tirando por repeticion, esto esta en colorear()");
-//		for (int i = 0; i < cantNodos; i++) {
-//			System.out.println(i + " Color: " + listaColoreada[i]);
-//		}
-		
+		}	
 	}
 	
 	public void secuencial(int repeticiones) {
-		
 		int mejorCantColores = 0;
-		
 		for(int i = 0; i < repeticiones; i++) {
 			System.out.println("Repeticion: " + i);
 			mezclar();
@@ -166,15 +158,11 @@ public class GrafoNDNP {
 	}
 
 	public void matula(int repeticiones) {
-		int [] mejorColoreado = new int[cantNodos];
 		int mejorCantColores = 0;
-		
 		for(int i = 0; i < repeticiones; i++) {
-			
 			mezclar();
 			ordenarPorGrado(1); //le paso un 1 porque es creciente
 			colorear();
-			
 			//Guardar el mejor resultado	
 			if(mejorCantColores == 0 || mejorCantColores > this.cantColores) {
 				mejorColoreado = listaColoreada.clone();
@@ -190,15 +178,11 @@ public class GrafoNDNP {
 	}
 
 	public void wellshPowell(int repeticiones) {
-		int [] mejorColoreado = new int[cantNodos];
 		int mejorCantColores = 0;
-		
 		for(int i = 0; i < repeticiones; i++) {
-			
 			mezclar();
 			ordenarPorGrado(0); //le paso un 0 porque es decreciente
 			colorear();
-			
 			//Guardar el mejor resultado	
 			if(mejorCantColores == 0 || mejorCantColores > this.cantColores) {
 				mejorColoreado = listaColoreada.clone();
@@ -212,124 +196,6 @@ public class GrafoNDNP {
 		listaColoreada = mejorColoreado.clone();
 		cantColores = mejorCantColores;
 	}
-
-
-	
-	// COLOREO PABLO
-//	public void colorear() {
-//		// se fija si lo puede el color que tiene
-//		// sino agrega uno nuevo y lo pinta de ese
-//		int colorBase = 1;
-//		int color = colorBase;
-//		int noColoreado = -1;
-//		for (int i = 0; i < listaColoreada.length; i++) {
-//			listaColoreada[i] = noColoreado;
-//		}
-//		int nodoAnt = listaNodos.get(0);
-//		// listaColoreada[listaNodos.get(0)] = color;
-//		for (int nodo44 : listaNodos) {
-//			System.out.println(nodo44);
-//		}
-//		for (int nodoActual : listaNodos) {
-//			if (listaColoreada[nodoActual] == noColoreado) {
-//				listaColoreada[nodoActual] = color;
-//			}
-//			for (int i = 0; i < cantNodos; i++) {
-//				if (matriz.getValor(nodoActual, i)
-//						&& (listaColoreada[i] == noColoreado || listaColoreada[i] == listaColoreada[nodoActual])) {
-//					if (nodoAnt != i && listaColoreada[nodoAnt] != listaColoreada[nodoActual]
-//							&& !matriz.getValor(nodoAnt, i)) {
-//						if (check(listaColoreada[nodoAnt], i)) {
-//							color = listaColoreada[nodoAnt];
-//						} else {
-//							while (listaColoreada[nodoActual] >= color) {
-//								color++;
-//							}
-//						}
-//					} else {
-//						while (listaColoreada[nodoActual] >= color) {
-//							color++;
-//						}
-//					}
-//					listaColoreada[i] = color;
-//				}
-//				color = colorBase;
-//			}
-//			nodoAnt = nodoActual;
-//		}
-//		for (int i = 0; i < cantNodos; i++) {
-//			System.out.println(i + " Color: " + listaColoreada[i]);
-//		}
-//	}
-//	private boolean check(int color, int nodo) {
-//		for (int i = 0; i < cantNodos; i++) {
-//			if (matriz.getValor(nodo, i) && listaColoreada[i] == color) {
-//				return false;
-//			}
-//
-//		}
-//		return true;
-//	}
-	
-	// FIN COLOREO PABLO
-	
-	
-//	public void colorear() {
-//		// se fija si lo puede el color que tiene
-//		// sino agrega uno nuevo y lo pinta de ese
-//		int colorBase = 1;
-//		int color = colorBase;
-//		int noColoreado = -1;
-//		int nodoAnt = listaNodos.get(0);
-//		for (int i = 0; i < listaColoreada.length; i++) {
-//			listaColoreada[i] = noColoreado;
-//		}
-////		listaColoreada[listaNodos.get(0)] = color;
-//		for (int nodo44 : listaNodos) {
-//			System.out.println(nodo44);
-//		}
-//		for (int nodo1 : listaNodos) {
-//			if (listaColoreada[nodo1] == noColoreado) {
-//				listaColoreada[nodo1] = color;				
-//			}
-//			for (int i = 0; i < cantNodos; i++) {
-//				if (matriz.getValor(nodo1, i) && (listaColoreada[i] == noColoreado || listaColoreada[i] == listaColoreada[nodo1])) {
-//					if (nodoAnt != i && listaColoreada[nodoAnt] != listaColoreada[nodo1] && !matriz.getValor(nodoAnt, i)) {
-//						color = listaColoreada[nodoAnt];
-//					} else {
-//						while (listaColoreada[nodo1] >= color) {
-//						color++;
-//						}
-//					}
-//					listaColoreada[i] = color;
-//				}
-//				color = colorBase;
-//			}
-//			nodoAnt = nodo1;
-//		}
-//	}
-
-	
-//	public void secuencial() {
-//		 PINTAR EL PRIMERO // 0
-//		colorear(0);
-//		for (int i = 0; i < matriz.getCantNodos(); i++) {
-//			for (int j = i + 1; j < matriz.getCantNodos(); j++) {
-//				// SI ESTAN UNIDOS AL OTRO LO PINTO DE OTRO COLOR
-//				if (matriz.getValor(i, j)) {
-//					colorear(j);
-//				}
-//			}
-//		}
-//	}
-
-//	public void matula() {
-//
-//	}
-//
-//	public void wellshPowell() {
-//
-//	}
 
 	public void imprimir() throws IOException {
 		int cantAristasReales = (int)Math.floor(cantAristas*adyacencia);
@@ -352,6 +218,4 @@ public class GrafoNDNP {
 		}
 		pr.close();
 	}
-	
-
 }

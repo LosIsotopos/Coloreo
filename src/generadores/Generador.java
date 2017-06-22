@@ -13,12 +13,12 @@ public class Generador {
 	private int cantAristas;
 	private int cantNodos;
 	
-	
 	public Generador(int cantNodos) {
 		this.cantNodos = cantNodos;
 		grado = new int[cantNodos];
 		matriz = new MatrizSimetrica(cantNodos);
 		cantAristas = 0;
+		
 	}
 	
 	public void aleatorioProbArista (double probArista) {		
@@ -52,209 +52,53 @@ public class Generador {
 		}
 	}
 	
-	public void regularPorGrado (int gradoPorNodo) {
-		cantAristas = 0;
-		int grados = gradoPorNodo;
-		int aristas = (cantNodos * grados) / 2 ;
-		
-		if (cantNodos < grados) {
-			System.out.println("El Grado no puede ser mayor a los Nodos");
-		} else {
-			if (cantNodos%2 == 1 && grados%2 == 1 && cantNodos != grados) {
-				System.out.println("No se puede Nodos Impares con Grado Impar");
-			} else {
-				if (cantNodos == grados) {
-					System.out.println("No se puede si Nodos = Grado");
+	public void regularPorGrado(int grados) {
+		int aux = grados;
+		int salto = 1;
+		int k = 0;
+		// si cantidad de nodos es par => conecto con el opuesto
+		if (aux != 0 && (cantNodos % 2) == 0) {
+			while (k + (cantNodos / 2) != cantNodos) {
+				// mientras no llegue al
+				// ultimo nodo, conecto
+				// los opuestos
+				matriz.setValor(k, k + (cantNodos / 2));
+				grado[k]++;
+				grado[k + (cantNodos / 2)]++;
+				k++;
+				cantAristas++;
+			}
+			aux -= 1;
+		}
+		// mientras no se termino con el grado pedido
+		while (aux != 0) {
+			for (int i = 0; i < cantNodos; i++) {
+				if (i + salto <= cantNodos - 1) {
+					if (matriz.getValor(i, i + salto) == false) {
+						matriz.setValor(i, i + salto);
+						cantAristas++;
+						grado[i]++;
+						grado[i + salto]++;
+					}
 				} else {
-					// SI CANTIDAD DE NODOS -1 ES GRADOS, OSEA SI NODOS = 7 Y GRADO = 6
-					// UNO TODOS CON TODOS
-					if (cantNodos-1 == grados) {
-						aristas = completarTodo(aristas);
-						return;
-					}
-					if (cantNodos-1 == grados+1) {
-						aristas = completarTodo(aristas);
-						aristas = sacarGradoUno(aristas);
-						return;
-					}
-					if (grados == 3) {
-						aristas = gradoUno(aristas);
-						aristas = gradoDos(aristas);
-						grados-=3;
-						return;
-					}
-					if (grados == 2) {
-						// HACE GRADO 2, HACE EL CIRCULO
-						aristas = gradoDos(aristas);
-						grados-=2;	
-						return;
-					}
-					// PARA GRADO 1, UNE POR EJ: 0-3, 1-4 , 2-5
-					if (grados == 1) {
-						aristas = gradoUno(aristas);
-						grados--;
-						return;
-						// FIN GRADO 1							
-					}
-					
-					aristas = gradoDos(aristas);
-					int offset = 2;
-					while (aristas > 0) {
-						// SI LOS NODOS SON IMPARES
-						aristas = hacerPares(aristas, offset);
-						if (cantNodos%2 == 0) {
-							aristas = hacerImpares(aristas, offset);
-						}
-						offset++;
+					if (matriz.getValor((i + salto) - (cantNodos), i) == false) {
+						matriz.setValor((i + salto) - (cantNodos), i);
+						cantAristas++;
+						grado[(i + salto) - (cantNodos)]++;
+						grado[i]++;
 					}
 				}
 			}
+			aux -= 2;
+			salto++;
 		}
-		cantAristas =  (cantNodos * gradoPorNodo) / 2 ;
-	}
-	
-	private int hacerPares (int aristas, int offset) {
-		int i = 0;
-		int j = i + offset;
-		while (i != cantNodos-2) {
-			matriz.setValor(i, j);
-			grado[i]++;
-			grado[j]++;
-			aristas--;
-			if (i+offset < cantNodos) {
-				i += offset;
-			} else if (i+1 == cantNodos) {
-				i = 1;
-			}
-			if (j+offset < cantNodos) {
-				j += offset;								
-			} else if (j+offset-1 == cantNodos) {
-				j = 1;
-			}
-		}
-		matriz.setValor(i, 0);
-		grado[i]++;
-		grado[0]++;
-		aristas--;
-		return aristas;
+		cantAristas--;
 	}
 	
 	public void regularPorAdy(double porcAdy) {
 		// calculamos el grado en base al porcentaje de adyacencia recibido.
-		int gr = (int) (porcAdy * (cantNodos - 1));
-		regularPorGrado(gr);
-	}
-	
-	private int hacerImpares (int aristas, int offset) {
-		int i = 1;
-		int j = i + offset;
-		while (i != cantNodos-1) {
-			matriz.setValor(i, j);
-			grado[i]++;
-			grado[j]++;
-			aristas--;
-			if (i+offset < cantNodos) {
-				i += offset;
-			} else if (i+1 == cantNodos) {
-				i = 1;
-			}
-			if (j+offset < cantNodos) {
-				j += offset;								
-			} else if (j+offset-1 == cantNodos) {
-				j = 1;
-			}
-		}
-		matriz.setValor(i, 1);
-		grado[i]++;
-		grado[1]++;
-		aristas--;
-		return aristas;
-	}
-	// ESTE GRADO 1 HACE 0-3, 1-4, 2-5
-	private int gradoUno(int aristas) {
-		int i = 0;
-		while(i + (cantNodos/2) != cantNodos) {
-			matriz.setValor(i, i+(cantNodos/2));
-			grado[i]++;
-			grado[i+(cantNodos/2)]++;
-			i++;
-			cantAristas++;
-			aristas--;
-		}
-		return aristas;
-	}
-	
-	private int sacarGradoUno(int aristas) {
-		int i = 0;
-		while(i + (cantNodos/2) != cantNodos) {
-			matriz.outValor(i, i+(cantNodos/2));
-			grado[i]--;
-			grado[i+(cantNodos/2)]--;
-			i++;
-			cantAristas--;
-			aristas++;
-		}
-		return aristas;
-	}
-	//ESTE GRADO 1 HACE 0-2, 1-4, 3-5
-//	private int gradoUno(int aristas) {
-//		int i = 0;
-//		int count = cantNodos/2;
-//		while (i < cantNodos && count != 0) {
-//			if (grado[i] == 0) {
-//				if (count%2 == 1){
-//					if (i+2 < cantNodos && !matriz.getValor(i, i+2)) {
-//						matriz.setValor(i, i+2);
-//						grado[i]++;
-//						grado[i+2]++;
-//						count--;
-//						aristas--;
-//						System.out.println(i + " " + Integer.valueOf(i+2));
-//					}					
-//				} else {
-//					if (i+3 < cantNodos  && !matriz.getValor(i, i+3)) {
-//						matriz.setValor(i, i+3);
-//						grado[i]++;
-//						grado[i+3]++;
-//						count--;
-//						aristas--;
-//						System.out.println(i + " " + Integer.valueOf(i+3));
-//					}
-//				}		
-//			}
-//			i++;
-//		}
-//		return aristas;
-//	}
-	
-	private int gradoDos(int aristas) {
-		for (int j = 0; j < cantNodos; j++) {
-			if ( j + 1 == cantNodos) {
-				matriz.setValor(0, j);
-				grado[0]++;
-				grado[j]++;
-			} else {
-				matriz.setValor(j, j+1);
-				grado[j]++;
-				grado[j+1]++;
-			}
-			aristas--;
-			cantAristas++;
-		}
-		return aristas;
-	}
-
-	private int completarTodo(int aristas) {
-		for (int j = 0; j < cantNodos; j++) {
-			for (int j2 = j+1; j2 < cantNodos; j2++) {
-				matriz.setValor(j, j2);
-				aristas--;
-				cantAristas++;
-				grado[j]++;
-				grado[j2]++;
-			}
-		}
-		return aristas;
+		int grado = (int) (porcAdy * (cantNodos - 1));
+		regularPorGrado(grado);
 	}
 			
 	public void nPartitos (int nParticion) {
@@ -274,6 +118,25 @@ public class Generador {
 				}
 			}
 		}
+	}
+	
+	
+	public void escribir(String path) throws IOException {
+		FileWriter archivo = new FileWriter(path + ".in");
+		PrintWriter fichero = new PrintWriter(archivo);
+		fichero.println(cantNodos + " " + matriz.calcularAristas() + " " + getPorcentajeAdy() + " " + getGradoMin() + " " + getGradoMax());
+		for (int i = 0; i < cantNodos; i++) {
+			for (int j = i; j < cantNodos; j++) {
+				if (i != j && matriz.getValor(i, j) == true) {
+					fichero.println(i + " " + j);					
+				}
+			}
+		}
+		archivo.close();
+	}
+	
+	public MatrizSimetrica getMatriz() {
+		return matriz;
 	}
 	
 	public int getGradoMin() {
@@ -310,23 +173,5 @@ public class Generador {
 				}
 			}
 		}
-	}
-	
-	public void escribir(String path) throws IOException {
-		FileWriter archivo = new FileWriter(path + ".in");
-		PrintWriter fichero = new PrintWriter(archivo);
-		fichero.println(cantNodos + " " + matriz.calcularAristas() + " " + getPorcentajeAdy() + " " + getGradoMin() + " " + getGradoMax());
-		for (int i = 0; i < cantNodos; i++) {
-			for (int j = i; j < cantNodos; j++) {
-				if (i != j && matriz.getValor(i, j) == true) {
-					fichero.println(i + " " + j);					
-				}
-			}
-		}
-		archivo.close();
-	}
-
-	public MatrizSimetrica getMatriz() {
-		return matriz;
 	}
 }
