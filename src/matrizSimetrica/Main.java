@@ -22,13 +22,14 @@ public class Main {
 
 //		grafo.escribir("ColorearCirculo8-2");
 		
-		String path = "Grafo600-90Ady.in";	
+		String path = "Grafo600-60Ady.in";	
 //		String path = "ColorearCirculo8-2.in";
 		GrafoNDNP grafo = new GrafoNDNP(path);
 		grafo.matula(10000);
 		grafo.imprimir();
 		
-		if(new ProgProbador(path, "Coloreado600-90Ady.out").check()) {
+		if(new ProgProbador(path, "Coloreado600-61Ady.out").check()) {
+			System.out.println("No fallo");
 			grafo.imprimirFreq("Matula");
 		} else {
 			System.err.println("Algo fallo");

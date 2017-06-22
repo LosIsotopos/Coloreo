@@ -192,6 +192,7 @@ public class GrafoNDNP {
 			}
 			//guardo resultado en la tabla de frecuencia
 			frecuencia[cantColores-1]++;
+			System.out.println("REP: " + i);
 		}
 		//me quedo con el mejor resultado
 		listaColoreada = mejorColoreado.clone();
