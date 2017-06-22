@@ -51,7 +51,7 @@ public class GrafoNDNP {
 		String path = "ColorearGrafo8-3.in";	
 //		String path = "ColorearCirculo8-2.in";
 		GrafoNDNP grafo = new GrafoNDNP(path);
-		grafo.secuencial(3);
+		grafo.secuencial(1000);
 		
 		System.out.println(new ProgProbador("ColorearGrafo8-3.in", "Coloreado8-12.out").check());
 	}
@@ -107,10 +107,11 @@ public class GrafoNDNP {
 			}
 			color = colorBase;
 		}
-		System.out.println("Me va tirando por repeticion, esto esta en colorear()");
-		for (int i = 0; i < cantNodos; i++) {
-			System.out.println(i + " Color: " + listaColoreada[i]);
-		}
+//		System.out.println("Me va tirando por repeticion, esto esta en colorear()");
+//		for (int i = 0; i < cantNodos; i++) {
+//			System.out.println(i + " Color: " + listaColoreada[i]);
+//		}
+		
 	}
 	
 	public void secuencial(int repeticiones) {
@@ -121,7 +122,7 @@ public class GrafoNDNP {
 			System.out.println("Repeticion: " + i);
 			mezclar();
 			colorear();
-			System.out.println("Colores de la repeticion: " + cantColores);
+//			System.out.println("Colores de la repeticion: " + cantColores);
 			//Guardar mejor resultado	
 			if(mejorCantColores == 0 || mejorCantColores > this.cantColores) {
 				mejorColoreado = listaColoreada.clone();
@@ -130,19 +131,31 @@ public class GrafoNDNP {
 			}
 			//guardo resultado en la tabla de frecuencia
 			frecuencia[cantColores-1]++;
+//			try {
+//				imprimir(String.valueOf(i));
+//				System.out.print("VERIFICACION: ");
+//				if(!new ProgProbador("ColorearGrafo8-3.in", i+".out").check()) {
+//					System.err.println("ERROR");
+//				} else {
+//					System.out.println("BIEN");
+//				} 
+//			} catch (IOException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
 		}
 		//me quedo con el mejor resultado
 		listaColoreada = mejorColoreado.clone();
 		cantColores = mejorCantColores;
-		System.out.println("MEJOR CANT DE COLORES: " + cantColores);
-		System.out.println("MEJOR LISTA DE COLORES");
-		for (int i = 0; i < listaColoreada.length; i++) {
-			System.out.println(i + " Color: " + listaColoreada[i]);
-		}
-		System.out.println("FRECUENCIAS");
-		for (int i = 0; i < frecuencia.length; i++) {
-			System.out.println("Color: " + Integer.valueOf(i+1) + " Frecuencia :" + frecuencia[i]);
-		}
+//		System.out.println("MEJOR CANT DE COLORES: " + cantColores);
+//		System.out.println("MEJOR LISTA DE COLORES");
+//		for (int i = 0; i < listaColoreada.length; i++) {
+//			System.out.println(i + " Color: " + listaColoreada[i]);
+//		}
+//		System.out.println("FRECUENCIAS");
+//		for (int i = 0; i < frecuencia.length; i++) {
+//			System.out.println("Color: " + Integer.valueOf(i+1) + " Frecuencia :" + frecuencia[i]);
+//		}
 		System.out.println("MEJOR REPETICION: " + mejorRepeticion);
 //		try {
 //			imprimir();
@@ -328,5 +341,17 @@ public class GrafoNDNP {
 		}
 		pr.close();
 	}
+	
+	public void imprimir(String pathRep) throws IOException {
+		
+		String path = new String(pathRep + ".out");
+		PrintWriter pr = new PrintWriter(new FileWriter(path));
+		pr.println(cantNodos + " " + cantColores + " " + cantAristas + " " + adyacencia + " " + grMax + " " + grMin);
+		for (int i = 0; i < cantNodos; i++) {
+			pr.println(i + " " + listaColoreada[i]);
+		}
+		pr.close();
+	}
+	
 
 }
