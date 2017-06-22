@@ -7,14 +7,14 @@ import generadores.Generador;
 public class Main {
 
 	public static void main(String[] args) throws IOException {
-		int cantNodos = 8;
-		int grado = 2;
+		int cantNodos = 1000;
+		int grado = 501;
 		Generador grafo = new Generador(cantNodos);
-		grafo.regularPorGrado(grado);
+		grafo.generarRegular(grado);
 		grafo.mostrarGrafo();
 		System.out.println(cantNodos*grado/2);
 		System.out.println(grafo.getMatriz().contarTrue());
-		grafo.escribir("ColorearCirculo8-2");
+		grafo.escribir("ColorearCirculo1000-501");
 		
 //		Generador grafo = new Generador(cantNodos);
 //		grafo.aleatorioProbArista(0.5);

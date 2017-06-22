@@ -39,6 +39,7 @@ public class ProgProbador {
 		for (int i = 0; i < matriz.getCantNodos(); i++) {
 			for (int j = 1; j < matriz.getCantNodos(); j++) {
 				if (matriz.getValor(i, j) && coloreo.get(i) == coloreo.get(j)) {
+					System.out.println("EL NODO: "+ i + " Y EL NODO: " + j);
 					return false;
 				}
 			}

@@ -12,6 +12,8 @@ public class Generador {
 	private int[] grado;
 	private int cantAristas;
 	private int cantNodos;
+	private int[] grados;
+	
 	
 	
 	public Generador(int cantNodos) {
@@ -19,6 +21,7 @@ public class Generador {
 		grado = new int[cantNodos];
 		matriz = new MatrizSimetrica(cantNodos);
 		cantAristas = 0;
+		
 	}
 	
 	public void aleatorioProbArista (double probArista) {		
@@ -358,5 +361,56 @@ public class Generador {
 
 	public MatrizSimetrica getMatriz() {
 		return matriz;
+	}
+	
+	//------------------------
+	
+	public void generarRegular(int gr)
+	{
+		int aux = gr;
+		int salto = 1;
+		int k = 0;
+		//si cantidad de nodos es par => conecto con el opuesto
+		if(aux != 0 && (cantNodos % 2) == 0)
+		{	
+			while(k + (cantNodos/2) != cantNodos) //mientras no llegue al �ltimo nodo, conecto los opuestos
+			{
+				matriz.setValor(k, k+(cantNodos/2));
+				grado[k]++;
+				grado[k+(cantNodos/2)]++;
+				k++;
+				cantAristas++;
+			}
+			aux -= 1;
+		}
+		while(aux != 0) //mientras no se termino con el grado pedido
+		{
+			for(int i = 0; i < cantNodos; i++)
+			{
+				if( i+salto <= cantNodos-1)
+				{
+					if(matriz.getValor(i, i+salto) == false)
+					{
+						matriz.setValor(i, i+salto);
+						cantAristas++;
+						grado[i]++;
+						grado[i+salto]++;
+					}
+				}
+				else
+				{
+					if(matriz.getValor((i+salto)-(cantNodos), i) == false)
+					{
+						matriz.setValor((i+salto)-(cantNodos), i);
+						cantAristas++;
+						grado[(i+salto)-(cantNodos)]++;
+						grado[i]++;
+					}
+				}
+			}
+			aux -= 2;
+			salto ++;
+		}
+		cantAristas--;
 	}
 }

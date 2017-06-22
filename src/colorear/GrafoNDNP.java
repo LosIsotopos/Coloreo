@@ -48,12 +48,15 @@ public class GrafoNDNP {
 	}
 	
 	public static void main(String[] args) throws IOException {
-		String path = "ColorearGrafo8-3.in";	
+		String path = "ColorearCirculo1000-501.in";	
 //		String path = "ColorearCirculo8-2.in";
 		GrafoNDNP grafo = new GrafoNDNP(path);
-		grafo.secuencial(1000);
+		grafo.matula(20);
+		grafo.imprimir();
+		System.out.println(new ProgProbador(path, "Coloreado1000-250498.out").check());
 		
-		System.out.println(new ProgProbador("ColorearGrafo8-3.in", "Coloreado8-12.out").check());
+//		Generador g = new Generador(1000);
+//		g.generarRegular(500);
 	}
 	
 	public void mezclar() {
@@ -166,7 +169,7 @@ public class GrafoNDNP {
 	}
 
 	public void matula(int repeticiones) {
-		int [] mejorColoreado = new int[cantNodos];
+		
 		int mejorCantColores = 0;
 		
 		for(int i = 0; i < repeticiones; i++) {
@@ -190,7 +193,7 @@ public class GrafoNDNP {
 	}
 
 	public void wellshPowell(int repeticiones) {
-		int [] mejorColoreado = new int[cantNodos];
+		
 		int mejorCantColores = 0;
 		
 		for(int i = 0; i < repeticiones; i++) {
@@ -352,6 +355,8 @@ public class GrafoNDNP {
 		}
 		pr.close();
 	}
+	//-----------------
 	
+
 
 }
