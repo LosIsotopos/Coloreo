@@ -52,18 +52,6 @@ public class Generador {
 		}
 	}
 	
-//	public void regularPorGrado (int gradoPorNodo) {
-//		for (int i = 0; i < cantNodos; i++) {
-//			for (int j = i + 1; j < cantNodos; j++) {
-//				if(gradoPorNodo != grado[i] && !matriz.getValor(i, j)) {
-//					matriz.setValor(i, j);
-//					grado[i]++;
-//					grado[j]++;
-//					cantAristas++;
-//				}
-//			}
-//		}
-//	}
 	public void regularPorGrado (int gradoPorNodo) {
 		cantAristas = 0;
 		int grados = gradoPorNodo;
@@ -96,7 +84,6 @@ public class Generador {
 						return;
 					}
 					if (grados == 2) {
-						// SI ES GRADO 3 QUE HAGA GRADO 2 Y GRADO 1
 						// HACE GRADO 2, HACE EL CIRCULO
 						aristas = gradoDos(aristas);
 						grados-=2;	
@@ -119,40 +106,6 @@ public class Generador {
 							aristas = hacerImpares(aristas, offset);
 						}
 						offset++;
-						
-						
-						
-//						System.out.println("ANTES DE HACER ALGO ARISTAS = " + aristas);
-//						aristas = gradoUno(aristas);
-//						System.out.println("DESPUES DE GRADO 1 ARISTAS = " + aristas);
-//						aristas = gradoDos(aristas);
-//						System.out.println("DESPUES DE GRADO 2 ARISTAS = " + aristas);
-//						if (cantNodos%2 == 1) {
-//							matriz.setValor(cantNodos/2, cantNodos-1);
-//							grado[cantNodos/2]++;
-//							grado[cantNodos-1]++;
-//							aristas--;
-//							System.out.println(Integer.valueOf(cantNodos/2) + " " + Integer.valueOf(cantNodos-1));
-//							System.out.println("PEPE");
-//						}
-//						matriz.setValor(0, cantNodos-2);
-//						aristas--;
-//						grado[0]++;
-//						grado[cantNodos-2]++;
-//						System.out.println("0 "+ Integer.valueOf(cantNodos-2));
-//						System.out.println("A");
-//						System.out.println("ARISTAS = " + aristas);
-//						int i = 1;
-//						while (i < cantNodos && aristas > 0) {
-//							for (int j = i+1; j < cantNodos; j++) {
-//								if (!matriz.getValor(i, j) && grado[i] < grados && grado[j] < grados) {
-//									matriz.setValor(i, j);
-//									System.out.println(i + " " + j);
-//									i++;
-//									aristas--;
-//								}
-//							}
-//						}
 					}
 				}
 			}
@@ -184,6 +137,12 @@ public class Generador {
 		grado[0]++;
 		aristas--;
 		return aristas;
+	}
+	
+	public void regularPorAdy(double porcAdy) {
+		// calculamos el grado en base al porcentaje de adyacencia recibido.
+		int gr = (int) (porcAdy * (cantNodos - 1));
+		regularPorGrado(gr);
 	}
 	
 	private int hacerImpares (int aristas, int offset) {
