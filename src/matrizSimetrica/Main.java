@@ -3,7 +3,6 @@ package matrizSimetrica;
 import java.io.IOException;
 
 import colorear.GrafoNDNP;
-import generadores.Generador;
 import progProbador.ProgProbador;
 
 public class Main {
@@ -22,13 +21,13 @@ public class Main {
 
 //		grafo.escribir("ColorearCirculo8-2");
 		
-		String path = "Grafo600-90Ady.in";	
+		String path = "Grafo1000-75Ady.in";	
 //		String path = "ColorearCirculo8-2.in";
 		GrafoNDNP grafo = new GrafoNDNP(path);
 		grafo.matula(10000);
 		grafo.imprimir();
-		
-		if(new ProgProbador(path, "Coloreado600-90Ady.out").check()) {
+		System.out.println("Done");
+		if(new ProgProbador(path, "Coloreado1000-75Ady.out").check()) {
 			grafo.imprimirFreq("Matula");
 		} else {
 			System.err.println("Algo fallo");
