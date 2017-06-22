@@ -21,7 +21,9 @@ public class Main {
 
 //		grafo.escribir("ColorearCirculo8-2");
 		
-		String path = "Grafo1000-75Ady.in";	
+
+
+		String path = "Grafo600-60Ady.in";	
 
 //		String path = "ColorearCirculo8-2.in";
 
@@ -36,8 +38,7 @@ public class Main {
 //			grafo.imprimirFreq("Matula");
 
 		
-//			grafo.imprimirFreq("Secuencial");
-//		grafo.imprimirFreq("Matula");
+
 			grafo.imprimirFreq("WellshPowell");
 		
 		if(new ProgProbador(path, "Coloreado1000-75Ady.out").check()) {
