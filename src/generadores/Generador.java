@@ -82,26 +82,31 @@ public class Generador {
 					// UNO TODOS CON TODOS
 					if (cantNodos-1 == grados) {
 						aristas = completarTodo(aristas);
+						return;
 					}
 					if (cantNodos-1 == grados+1) {
 						aristas = completarTodo(aristas);
 						aristas = sacarGradoUno(aristas);
+						return;
 					}
 					if (grados == 3) {
 						aristas = gradoUno(aristas);
 						aristas = gradoDos(aristas);
 						grados-=3;
+						return;
 					}
 					if (grados == 2) {
 						// SI ES GRADO 3 QUE HAGA GRADO 2 Y GRADO 1
 						// HACE GRADO 2, HACE EL CIRCULO
 						aristas = gradoDos(aristas);
 						grados-=2;	
+						return;
 					}
 					// PARA GRADO 1, UNE POR EJ: 0-3, 1-4 , 2-5
 					if (grados == 1) {
 						aristas = gradoUno(aristas);
 						grados--;
+						return;
 						// FIN GRADO 1							
 					}
 					
@@ -160,6 +165,8 @@ public class Generador {
 		int j = i + offset;
 		while (i != cantNodos-2) {
 			matriz.setValor(i, j);
+			grado[i]++;
+			grado[j]++;
 			aristas--;
 			if (i+offset < cantNodos) {
 				i += offset;
@@ -173,6 +180,8 @@ public class Generador {
 			}
 		}
 		matriz.setValor(i, 0);
+		grado[i]++;
+		grado[0]++;
 		aristas--;
 		return aristas;
 	}
@@ -182,6 +191,8 @@ public class Generador {
 		int j = i + offset;
 		while (i != cantNodos-1) {
 			matriz.setValor(i, j);
+			grado[i]++;
+			grado[j]++;
 			aristas--;
 			if (i+offset < cantNodos) {
 				i += offset;
@@ -195,6 +206,8 @@ public class Generador {
 			}
 		}
 		matriz.setValor(i, 1);
+		grado[i]++;
+		grado[1]++;
 		aristas--;
 		return aristas;
 	}
@@ -208,7 +221,6 @@ public class Generador {
 			i++;
 			cantAristas++;
 			aristas--;
-//			System.out.println(i + " " + Integer.valueOf(i+(cantNodos/2)));
 		}
 		return aristas;
 	}
@@ -222,7 +234,6 @@ public class Generador {
 			i++;
 			cantAristas--;
 			aristas++;
-//			System.out.println(i + " " + Integer.valueOf(i+(cantNodos/2)));
 		}
 		return aristas;
 	}
@@ -263,12 +274,10 @@ public class Generador {
 				matriz.setValor(0, j);
 				grado[0]++;
 				grado[j]++;
-//				System.out.println("0 "+ j);
 			} else {
 				matriz.setValor(j, j+1);
 				grado[j]++;
 				grado[j+1]++;
-//				System.out.println(j + " " + Integer.valueOf(j+1));
 			}
 			aristas--;
 			cantAristas++;
@@ -282,6 +291,8 @@ public class Generador {
 				matriz.setValor(j, j2);
 				aristas--;
 				cantAristas++;
+				grado[j]++;
+				grado[j2]++;
 			}
 		}
 		return aristas;
@@ -307,10 +318,10 @@ public class Generador {
 	}
 	
 	public int getGradoMin() {
-		int gradoMin = 0;
+		int gradoMin = Integer.MAX_VALUE;
 		for (int i = 0; i < cantNodos; i++) {
-			if (grado[i] < grado[gradoMin])
-				gradoMin = i;
+			if (grado[i] < gradoMin)
+				gradoMin = grado[i];
 		}
 		return gradoMin;
 	}
@@ -318,8 +329,8 @@ public class Generador {
 	public int getGradoMax() {
 		int gradoMax = 0;
 		for (int i = 0; i < cantNodos; i++) {
-			if (grado[i] > grado[gradoMax])
-				gradoMax = i;
+			if (grado[i] > gradoMax)
+				gradoMax = grado[i];
 		}
 		return gradoMax;
 	}
