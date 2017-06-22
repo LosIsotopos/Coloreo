@@ -22,13 +22,27 @@ public class Main {
 //		grafo.escribir("ColorearCirculo8-2");
 		
 		String path = "Grafo1000-75Ady.in";	
+
 //		String path = "ColorearCirculo8-2.in";
+
 		GrafoNDNP grafo = new GrafoNDNP(path);
-		grafo.matula(10000);
+//		grafo.secuencial(10000);
+//		grafo.matula(10000);
+		grafo.wellshPowell(10000);
 		grafo.imprimir();
-		System.out.println("Done");
+//
+//		System.out.println("Done");
+//		if(new ProgProbador(path, "Coloreado1000-75Ady.out").check()) {
+//			grafo.imprimirFreq("Matula");
+
+		
+//			grafo.imprimirFreq("Secuencial");
+//		grafo.imprimirFreq("Matula");
+			grafo.imprimirFreq("WellshPowell");
+		
 		if(new ProgProbador(path, "Coloreado1000-75Ady.out").check()) {
-			grafo.imprimirFreq("Matula");
+			System.out.println("OKAI");
+
 		} else {
 			System.err.println("Algo fallo");
 		}

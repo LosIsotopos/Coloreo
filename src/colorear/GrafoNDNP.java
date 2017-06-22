@@ -159,7 +159,9 @@ public class GrafoNDNP {
 
 	public void matula(int repeticiones) {
 		int mejorCantColores = 0;
+		System.out.println("MATULA");
 		for(int i = 0; i < repeticiones; i++) {
+			System.out.println("Repeticion: " + i);
 			mezclar();
 			ordenarPorGrado(1); //le paso un 1 porque es creciente
 			colorear();
@@ -171,7 +173,6 @@ public class GrafoNDNP {
 			}
 			//guardo resultado en la tabla de frecuencia
 			frecuencia[cantColores-1]++;
-			System.out.println("Rep: " + i);
 		}
 		//me quedo con el mejor resultado
 		listaColoreada = mejorColoreado.clone();
@@ -180,7 +181,9 @@ public class GrafoNDNP {
 
 	public void wellshPowell(int repeticiones) {
 		int mejorCantColores = 0;
+		System.out.println("POWELL");
 		for(int i = 0; i < repeticiones; i++) {
+			System.out.println("Repeticion: " + i);
 			mezclar();
 			ordenarPorGrado(0); //le paso un 0 porque es decreciente
 			colorear();
