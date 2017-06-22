@@ -47,14 +47,14 @@ public class GrafoNDNP {
 		}	
 	}
 	
-	public static void main(String[] args) throws IOException {
-		String path = "ColorearCirculo1000-501.in";	
-//		String path = "ColorearCirculo8-2.in";
-		GrafoNDNP grafo = new GrafoNDNP(path);
-		grafo.matula(20);
-		grafo.imprimir();
-		System.out.println(new ProgProbador(path, "Coloreado1000-250498.out").check());
-	}
+//	public static void main(String[] args) throws IOException {
+//		String path = "ColorearCirculo1000-501.in";	
+////		String path = "ColorearCirculo8-2.in";
+//		GrafoNDNP grafo = new GrafoNDNP(path);
+//		grafo.matula(20);
+//		grafo.imprimir();
+//		System.out.println(new ProgProbador(path, "Coloreado1000-250498.out").check());
+//	}
 	
 	public void mezclar() {
 		Collections.shuffle(listaNodos);
@@ -203,7 +203,7 @@ public class GrafoNDNP {
 		PrintWriter pr = new PrintWriter(new FileWriter(path));
 		pr.println(cantNodos + " " + cantColores + " " + cantAristas + " " + adyacencia + " " + grMax + " " + grMin);
 		for (int i = 0; i < cantNodos; i++) {
-			pr.println(i + " " + mejorColoreado[i]);
+			pr.println(i + " " + listaColoreada[i]);
 		}
 		pr.close();
 	}
@@ -217,5 +217,22 @@ public class GrafoNDNP {
 			pr.println(i + " " + listaColoreada[i]);
 		}
 		pr.close();
+	}
+	
+	public void imprimirFreq() {
+		int cantAristasReales = (int)Math.floor(cantAristas*adyacencia);
+		String path = new String("Frecuencia"+cantNodos+ "-" + cantAristasReales + ".csv");
+
+		try {
+			PrintWriter pr = new PrintWriter(new FileWriter(path));
+			//pr.println("Primer recorrida de menor cant colores: " + mejorRepeticion);
+			for (int i = 0; i < frecuencia.length; i++) {
+				pr.println(i+1+","+frecuencia[i]);
+			}
+			pr.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }
