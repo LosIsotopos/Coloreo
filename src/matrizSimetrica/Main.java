@@ -12,9 +12,15 @@ public class Main {
 		Generador grafo = new Generador(cantNodos);
 		grafo.generarRegular(grado);
 		grafo.mostrarGrafo();
+		System.out.println(grafo.getGradoMax());
+		System.out.println(grafo.getGradoMin());
 		System.out.println(cantNodos*grado/2);
 		System.out.println(grafo.getMatriz().contarTrue());
+
 		grafo.escribir("ColorearCirculo1000-501");
+
+//		grafo.escribir("ColorearCirculo8-2");
+
 		
 //		Generador grafo = new Generador(cantNodos);
 //		grafo.aleatorioProbArista(0.5);
