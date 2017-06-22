@@ -171,6 +171,7 @@ public class GrafoNDNP {
 			}
 			//guardo resultado en la tabla de frecuencia
 			frecuencia[cantColores-1]++;
+			System.out.println("Rep: " + i);
 		}
 		//me quedo con el mejor resultado
 		listaColoreada = mejorColoreado.clone();
@@ -198,8 +199,8 @@ public class GrafoNDNP {
 	}
 
 	public void imprimir() throws IOException {
-		int cantAristasReales = (int)Math.floor(cantAristas*adyacencia);
-		String path = new String("Coloreado"+cantNodos+ "-" + cantAristasReales + ".out");
+		int adyEntera = (int)Math.ceil(100*adyacencia);
+		String path = new String("Coloreado"+cantNodos+ "-" + adyEntera + "Ady.out");
 		PrintWriter pr = new PrintWriter(new FileWriter(path));
 		pr.println(cantNodos + " " + cantColores + " " + cantAristas + " " + adyacencia + " " + grMax + " " + grMin);
 		for (int i = 0; i < cantNodos; i++) {
@@ -219,9 +220,9 @@ public class GrafoNDNP {
 		pr.close();
 	}
 	
-	public void imprimirFreq() {
-		int cantAristasReales = (int)Math.floor(cantAristas*adyacencia);
-		String path = new String("Frecuencia"+cantNodos+ "-" + cantAristasReales + ".csv");
+	public void imprimirFreq(String algo) {
+		int adyEntera = (int)Math.ceil(100*adyacencia);
+		String path = new String(algo+cantNodos+ "-" + adyEntera + ".csv");
 
 		try {
 			PrintWriter pr = new PrintWriter(new FileWriter(path));

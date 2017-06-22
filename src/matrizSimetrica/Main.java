@@ -22,12 +22,17 @@ public class Main {
 
 //		grafo.escribir("ColorearCirculo8-2");
 		
-		String path = "ColorearGrafo8-3.in";	
+		String path = "Grafo600-90Ady.in";	
 //		String path = "ColorearCirculo8-2.in";
 		GrafoNDNP grafo = new GrafoNDNP(path);
-		grafo.matula(20);
+		grafo.matula(10000);
 		grafo.imprimir();
-		System.out.println(new ProgProbador(path, "Coloreado8-12.out").check());
+		
+		if(new ProgProbador(path, "Coloreado600-90Ady.out").check()) {
+			grafo.imprimirFreq("Matula");
+		} else {
+			System.err.println("Algo fallo");
+		}
 
 		double porcenAdy = 0.75;
 //		Generador grafo = new Generador(cantNodos);
