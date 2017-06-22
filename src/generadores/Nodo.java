@@ -1,28 +1,23 @@
 package generadores;
 
-import java.util.LinkedList;
-import java.util.List;
-
 public class Nodo {
 	private final int idNodo;
-	private int cantAristas = 0;
-	private List<Integer> nodosConectados = new LinkedList<Integer>();
+	private int grado = 0;
 	
 	public Nodo(int idNodo) {
 		this.idNodo = idNodo;
 	}
 	
-	public void aumentarAristas(int idNodo) {
-		cantAristas++;
-		nodosConectados.add(idNodo);
+	public void aumentarGrado(int idNodo) {
+		this.grado++;
 	}
-
-	public int getCantAristas() {
-		return cantAristas;
+	
+	public void setGrado(int grado){
+		this.grado = grado;
 	}
-
-	public List<Integer> getNodosConectados() {
-		return nodosConectados;
+	
+	public int getGrado() {
+		return grado;
 	}
 
 	public int getIdNodo() {

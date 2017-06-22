@@ -1,12 +1,8 @@
 package matrizSimetrica;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Random;
 
 import generadores.Generador;
-import generadores.RegularPorGrado;
 
 public class Main {
 
