@@ -1,6 +1,8 @@
+package progProbador;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Locale;
 import java.util.Scanner;
 
 import matrizSimetrica.MatrizSimetrica;
@@ -11,20 +13,21 @@ public class ProgProbador {
 	public ProgProbador(String grafo, String coloreo) throws FileNotFoundException {
 		matriz = new MatrizSimetrica(grafo);
 		Scanner sc = new Scanner(new File(coloreo));
+		sc.useLocale(Locale.ENGLISH);
 		int cantNodos = sc.nextInt();
 		// Perdida de datos
 		// Cantidad de colores
-		sc.nextInt();
+		int a = sc.nextInt();
 		// CCol
-		sc.nextInt();
+		int b = sc.nextInt();
 		// cantAristas
-		sc.nextInt();
+		double c= sc.nextDouble();
 		// %ady
-		sc.nextDouble();
+		int d =sc.nextInt();
 		// grmax
-		sc.nextInt();
+		int e =sc.nextInt();
 		// grmin
-		sc.nextInt();
+		
 		for (int i = 0; i < cantNodos; i++) {
 			// INDICE + COLOR
 			// Tecnicamente no hace falta ya que el está ordenado el archivo

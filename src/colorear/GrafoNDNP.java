@@ -10,6 +10,7 @@ import java.util.Comparator;
 
 import generadores.Nodo;
 import matrizSimetrica.MatrizSimetrica;
+import progProbador.ProgProbador;
 
 public class GrafoNDNP {
 	private MatrizSimetrica matriz;
@@ -24,6 +25,7 @@ public class GrafoNDNP {
 	private ArrayList<Nodo> listaNodos = new ArrayList<Nodo>();
 	private int[] frecuencia;
 	private int mejorRepeticion;
+	private int [] mejorColoreado;
 
 	public GrafoNDNP(String path) throws FileNotFoundException {
 		this.matriz = new MatrizSimetrica(path);
@@ -34,7 +36,7 @@ public class GrafoNDNP {
 		this.grMax = matriz.getGradoMax();
 		this.grMin = matriz.getGradoMin();
 		this.grados = matriz.getGrados();
-		
+		this.mejorColoreado = new int[cantNodos];
 		this.listaColoreada = new int[cantNodos];
 		this.frecuencia = new int[cantNodos];
 		this.cantColores = 1;
@@ -50,6 +52,8 @@ public class GrafoNDNP {
 //		String path = "ColorearCirculo8-2.in";
 		GrafoNDNP grafo = new GrafoNDNP(path);
 		grafo.secuencial(3);
+		
+		System.out.println(new ProgProbador("ColorearGrafo8-3.in", "Coloreado8-12.out").check());
 	}
 	
 	public void mezclar() {
@@ -110,7 +114,7 @@ public class GrafoNDNP {
 	}
 	
 	public void secuencial(int repeticiones) {
-		int [] mejorColoreado = new int[cantNodos];
+		
 		int mejorCantColores = 0;
 		
 		for(int i = 0; i < repeticiones; i++) {
@@ -140,6 +144,12 @@ public class GrafoNDNP {
 			System.out.println("Color: " + Integer.valueOf(i+1) + " Frecuencia :" + frecuencia[i]);
 		}
 		System.out.println("MEJOR REPETICION: " + mejorRepeticion);
+//		try {
+//			imprimir();
+//		} catch (IOException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
 	}
 
 	public void matula(int repeticiones) {
@@ -287,8 +297,8 @@ public class GrafoNDNP {
 //	}
 
 	
-	public void secuencial() {
-		// PINTAR EL PRIMERO // 0
+//	public void secuencial() {
+//		 PINTAR EL PRIMERO // 0
 //		colorear(0);
 //		for (int i = 0; i < matriz.getCantNodos(); i++) {
 //			for (int j = i + 1; j < matriz.getCantNodos(); j++) {
@@ -298,20 +308,23 @@ public class GrafoNDNP {
 //				}
 //			}
 //		}
-	}
+//	}
 
-	public void matula() {
-
-	}
-
-	public void wellshPowell() {
-
-	}
+//	public void matula() {
+//
+//	}
+//
+//	public void wellshPowell() {
+//
+//	}
 
 	public void imprimir() throws IOException {
-		PrintWriter pr = new PrintWriter(new FileWriter("Coloreado: "+cantNodos+ "-" + cantAristas));
+		int cantAristasReales = (int)Math.floor(cantAristas*adyacencia);
+		String path = new String("Coloreado"+cantNodos+ "-" + cantAristasReales + ".out");
+		PrintWriter pr = new PrintWriter(new FileWriter(path));
+		pr.println(cantNodos + " " + cantColores + " " + cantAristas + " " + adyacencia + " " + grMax + " " + grMin);
 		for (int i = 0; i < cantNodos; i++) {
-			pr.println(i + " " + listaColoreada[i]);
+			pr.println(i + " " + mejorColoreado[i]);
 		}
 		pr.close();
 	}
