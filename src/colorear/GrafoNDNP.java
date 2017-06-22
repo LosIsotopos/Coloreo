@@ -1,7 +1,9 @@
 package colorear;
 
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -199,7 +201,11 @@ public class GrafoNDNP {
 
 	}
 
-	public void imprimir() {
-
+	public void imprimir() throws IOException {
+		PrintWriter pr = new PrintWriter(new FileWriter("Coloreado: "+cantNodos+ "-" + cantAristas));
+		for (int i = 0; i < cantNodos; i++) {
+			pr.println(i + " " + listaColoreada[i]);
+		}
+		pr.close();
 	}
 }
