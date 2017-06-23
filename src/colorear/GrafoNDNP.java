@@ -10,7 +10,6 @@ import java.util.Comparator;
 
 import generadores.Nodo;
 import matrizSimetrica.MatrizSimetrica;
-import progProbador.ProgProbador;
 
 public class GrafoNDNP {
 	private MatrizSimetrica matriz;
@@ -46,15 +45,6 @@ public class GrafoNDNP {
 			listaNodos.get(i).setGrado(grados[i]);
 		}	
 	}
-	
-//	public static void main(String[] args) throws IOException {
-//		String path = "ColorearCirculo1000-501.in";	
-////		String path = "ColorearCirculo8-2.in";
-//		GrafoNDNP grafo = new GrafoNDNP(path);
-//		grafo.matula(20);
-//		grafo.imprimir();
-//		System.out.println(new ProgProbador(path, "Coloreado1000-250498.out").check());
-//	}
 	
 	public void mezclar() {
 		Collections.shuffle(listaNodos);
@@ -114,7 +104,6 @@ public class GrafoNDNP {
 			System.out.println("Repeticion: " + i);
 			mezclar();
 			colorear();
-//			System.out.println("Colores de la repeticion: " + cantColores);
 			//Guardar mejor resultado	
 			if(mejorCantColores == 0 || mejorCantColores > this.cantColores) {
 				mejorColoreado = listaColoreada.clone();
@@ -123,38 +112,11 @@ public class GrafoNDNP {
 			}
 			//guardo resultado en la tabla de frecuencia
 			frecuencia[cantColores-1]++;
-//			try {
-//				imprimir(String.valueOf(i));
-//				System.out.print("VERIFICACION: ");
-//				if(!new ProgProbador("ColorearGrafo8-3.in", i+".out").check()) {
-//					System.err.println("ERROR");
-//				} else {
-//					System.out.println("BIEN");
-//				} 
-//			} catch (IOException e) {
-//				// TODO Auto-generated catch block
-//				e.printStackTrace();
-//			}
 		}
 		//me quedo con el mejor resultado
 		listaColoreada = mejorColoreado.clone();
 		cantColores = mejorCantColores;
-//		System.out.println("MEJOR CANT DE COLORES: " + cantColores);
-//		System.out.println("MEJOR LISTA DE COLORES");
-//		for (int i = 0; i < listaColoreada.length; i++) {
-//			System.out.println(i + " Color: " + listaColoreada[i]);
-//		}
-//		System.out.println("FRECUENCIAS");
-//		for (int i = 0; i < frecuencia.length; i++) {
-//			System.out.println("Color: " + Integer.valueOf(i+1) + " Frecuencia :" + frecuencia[i]);
-//		}
 		System.out.println("MEJOR REPETICION: " + mejorRepeticion);
-//		try {
-//			imprimir();
-//		} catch (IOException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
 	}
 
 	public void matula(int repeticiones) {

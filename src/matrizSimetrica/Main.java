@@ -9,37 +9,17 @@ public class Main {
 
 	public static void main(String[] args) throws IOException {
 		int cantNodos = 1000;
-
 		int grado = 500;
-//		Generador grafo = new Generador(cantNodos);
-//		grafo.regularPorGrado(grado);
-//		grafo.mostrarGrafo();
-//		System.out.println(cantNodos*grado/2);
-//		System.out.println(grafo.getMatriz().contarTrue());
-//
-//		grafo.escribir("ColorearCirculo1000-501");
-
-//		grafo.escribir("ColorearCirculo8-2");
-		
-
 
 		String path = "Grafo600-60Ady.in";	
-
-//		String path = "ColorearCirculo8-2.in";
 
 		GrafoNDNP grafo = new GrafoNDNP(path);
 //		grafo.secuencial(10000);
 //		grafo.matula(10000);
 		grafo.wellshPowell(10000);
-		grafo.imprimir();
-//
-//		System.out.println("Done");
-//		if(new ProgProbador(path, "Coloreado1000-75Ady.out").check()) {
-//			grafo.imprimirFreq("Matula");
+		grafo.imprimir();	
 
-		
-
-			grafo.imprimirFreq("WellshPowell");
+		grafo.imprimirFreq("WellshPowell");
 		
 		if(new ProgProbador(path, "Coloreado1000-75Ady.out").check()) {
 			System.out.println("OKAI");
@@ -48,7 +28,7 @@ public class Main {
 			System.err.println("Algo fallo");
 		}
 
-		double porcenAdy = 0.75;
+//		double porcenAdy = 0.75;
 //		Generador grafo = new Generador(cantNodos);
 		
 //		grafo.aleatorioProbAdy(porcenAdy);
